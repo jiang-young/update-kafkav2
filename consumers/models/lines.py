@@ -6,6 +6,10 @@ from models import Line
 
 
 logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 class Lines:
@@ -24,12 +28,16 @@ class Lines:
             value = message.value()
             if message_topic == "org.chicago.cta.stations.all.v5":
                 value = json.loads(value)
+                logger.info("TEST")
             if value["line"] == "green":
                 self.green_line.process_message(message)
+                logger.info("TEST")
             elif value["line"] == "red":
                 self.red_line.process_message(message)
+                logger.info("TEST")
             elif value["line"] == "blue":
                 self.blue_line.process_message(message)
+                logger.info("TEST")
             else:
                 logger.debug("discarding unknown line '%s' msg from %s: %s", value["line"], message_topic, value)
         elif "TURNSTILE_SUMMARY" == message_topic:

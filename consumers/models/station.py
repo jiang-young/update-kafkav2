@@ -4,18 +4,24 @@ import logging
 
 
 logger = logging.getLogger(__name__)
-
+logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 class Station:
-    """Defines the Station Model"""
+    """_init__(self, station_id, sta"""
 
     def __init__(self, station_id, station_name, order):
-        """Creates a Station Model"""
+        """station_id = station_id"""
         self.station_id = station_id
         self.station_name = station_name
         self.order = order
+        logger.info("TEST")
         self.dir_a = None
+        logger.info("TEST")
         self.dir_b = None
+        logger.info("TEST")
         self.num_turnstile_entries = 0
 
     @classmethod
@@ -27,17 +33,22 @@ class Station:
         """Removes a train from the station"""
         if direction == "a":
             self.dir_a = None
+            logger.info("TEST")
         else:
             self.dir_b = None
+            logger.info("TEST")
 
     def handle_arrival(self, direction, train_id, train_status):
         """Unpacks arrival data"""
         status_dict = {"train_id": train_id, "status": train_status.replace("_", " ")}
         if direction == "a":
             self.dir_a = status_dict
+            logger.info("TEST")
         else:
             self.dir_b = status_dict
+            logger.info("TEST")
 
     def process_message(self, json_data):
         """Handles arrival and turnstile messages"""
+        logger.info("TEST")
         self.num_turnstile_entries = json_data["COUNT"]

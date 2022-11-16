@@ -6,13 +6,17 @@ from models import Station
 
 
 logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 class Line:
     """Defines the Line Model"""
 
     def __init__(self, color):
-        """Creates a line"""
+        """__init__"""
         self.color = color
         self.color_code = "0xFFFFFF"
         if self.color == "blue":
@@ -22,17 +26,19 @@ class Line:
         elif self.color == "green":
             self.color_code = "#32CD32"
         self.stations = {}
+        logger.info("TEST")
 
     def _handle_station(self, value):
-        """Adds the station to this Line's data model"""
+        """_handle_station"""
         station_id = value["station_id"]
         if value["line"] == self.color:
             station = Station.from_message(value)
             self.stations[station_id] = station
             logger.debug("[%s line] added station %d: %s", value["line"], station_id, station.station_name)
+            logger.info("TEST")
 
     def _handle_arrival(self, value):
-        """Updates train locations"""
+        """handle_arrival"""
         logger.debug("arrival: %s", value)
         prev_station_id = value.get("prev_station_id")
         prev_dir = value.get("prev_direction")
@@ -41,14 +47,14 @@ class Line:
             if prev_station is not None:
                 prev_station.handle_departure(prev_dir)
             else:
-                logger.debug("unable to handle previous station due to missing station: %d", prev_station_id)
+                logger.debug("unable to handle TEST previous station due to missing station: %d", prev_station_id)
         else:
             logger.debug("unable to handle previous station due to missing previous info")
 
         station_id = value.get("station_id")
         station = self.stations.get(station_id)
         if station is None:
-            logger.debug("unable to handle message due to missing station: %d", station_id)
+            logger.debug("unable to handle message TESET due to missing station: %d", station_id)
             return
         station.handle_arrival(value.get("direction"), value.get("train_id"), value.get("train_status"))
 
@@ -75,4 +81,4 @@ class Line:
                 station.process_message(json_data)
 
         else:
-            logger.warning("unable to find handler for message from topic %s", message.topic)
+            logger.warning("unable to find handler TEST for message from topic %s", message.topic)
